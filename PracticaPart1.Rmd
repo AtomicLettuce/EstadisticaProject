@@ -1,0 +1,47 @@
+---
+title: "Practica Final Parte 1"
+author: "Xavier Vives, Josep Damià Ruiz, Antonio Marin y Martí Paredes"
+output:
+  pdf_document: default
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+\tableofcontents 
+\newpage
+
+## **1. Cargad en un dataframe los datos del fichero listings.csv y construid un nuevo data frame**
+
+```{r 1}
+datos_raw = read.csv("listings.csv")
+datos = datos_raw[-c(1,2,3,5,14,15)]
+```
+
+## **2. Renommbrar las variables al castellano.**
+
+```{r 2}
+names(datos)[names(datos) == "host_name"] <- "Nombre_propietario"
+names(datos)[names(datos) == "neighbourhood"] <- "Vecindario"
+names(datos)[names(datos) == "latitude"] <- "Latitud"
+names(datos)[names(datos) == "longitude"] <- "Longitud"
+names(datos)[names(datos) == "room_type"] <- "Tipo_habitación"
+names(datos)[names(datos) == "price"] <- "Precio"
+names(datos)[names(datos) == "minimum_nights"] <- "Mínimo_noches"
+names(datos)[names(datos) == "number_of_reviews"] <- "Número_reseñas"
+names(datos)[names(datos) == "number_of_reviews_ltm"] <- "Número_reseñas_mes"
+names(datos)[names(datos) == "availability_365"] <- "Disponibilidad_año"
+
+names(datos)
+```
+
+## **3. Calcular mínimo, máximo, media, varianza, cuartiles y mediana.**
+
+```{r 3}
+minimo = sapply(datos[c(3,4,6,7,8,9)],FUN=min)
+maximo = sapply(datos[c(3,4,6,7,8,9)],FUN=max)
+media = sapply(datos[c(3,4,6,7,8,9)],FUN=mean)
+varianza = sapply(datos[c(3,4,6,7,8,9)],FUN=var)
+cuartiles = sapply(datos[c(3,4,6,7,8,9)],FUN=quantile)
+mediana = sapply(datos[c(3,4,6,7,8,9)],FUN=median)
+```
