@@ -57,6 +57,7 @@ datosEstadisticos<-rbind(datosEstadisticos, media)
 datosEstadisticos<-rbind(datosEstadisticos, varianza)
 datosEstadisticos<-rbind(datosEstadisticos,cuartiles)
 
+datosEstadisticos<-round(datosEstadisticos, digits=5)
 datosEstadisticos
 
 ```
