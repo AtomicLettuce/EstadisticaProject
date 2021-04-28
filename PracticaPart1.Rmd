@@ -2,13 +2,13 @@
 title: "Practica Final Parte 1"
 author: "Xavier Vives, Josep Damià Ruiz, Antonio Marin y Martí Paredes"
 output:
-  html_document:
-    df_print: paged
+  pdf_document: default
   prettydoc::html_pretty:
     theme: cayman
     highlight: github
   word_document: default
-  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 \tableofcontents 
@@ -21,7 +21,7 @@ datos_raw = read.csv("listings.csv")
 datos = datos_raw[-c(1,2,3,5,14,15)]
 ```
 
-## **2. Renommbrar las variables al castellano.**
+## **2. Renombrar las variables al castellano.**
 
 ```{r 2}
 names(datos)[names(datos) == "host_name"] <- "Nombre_propietario"
@@ -58,5 +58,12 @@ datosEstadisticos<-rbind(datosEstadisticos, varianza)
 datosEstadisticos<-rbind(datosEstadisticos,cuartiles)
 
 datosEstadisticos
+```
 
+## **4. Tablas de frecuencias absolutas.**
+
+```{r 4}
+table(datos$Vecindario)
+table(datos$Nombre_propietario)
+table(datos$Tipo_habitación)
 ```
