@@ -58,11 +58,16 @@ datosEstadisticos
 
 ```
 
-## **5. Dibujar diagramas de cajas(boxplots ) e histogramas de todas las variables numéricas**
+```{r 5}
 
-```{r 3}
-
-
-
+boxplot(datos$Lat.)
+hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud")
+boxplot(datos$Long.)
+hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud")
+boxplot(datos$Precio)
+boxplot(datos$Min.noches)
+boxplot(datos$N_reseñas)
+boxplot(datos$Reseñas_mes)
+boxplot(datos$Disponibilidad_año)
 
 ```
