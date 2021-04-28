@@ -61,3 +61,12 @@ datosEstadisticos<-round(datosEstadisticos, digits=5)
 datosEstadisticos
 
 ```
+
+## **5. Dibujar diagramas de cajas(boxplots ) e histogramas de todas las variables numéricas**
+
+```{r 3}
+
+
+
+
+```
