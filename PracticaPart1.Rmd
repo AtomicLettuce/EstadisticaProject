@@ -60,7 +60,15 @@ datosEstadisticos
 ## **4. Tablas de frecuencias absolutas.**
 
 ```{r 4}
-table(datos$Vecindario)
-table(datos$Nombre_propietario)
-table(datos$Tipo_habitación)
+frecuenciaVecinador = table(datos$Vecindario)
+frecuenciaNombre = table(datos$Nombre_propietario)
+
+frecuenciaNombre <- subset(frecuenciaNombre,frecuenciaNombre > 20)
+frecuenciaNombre = sort(frecuenciaNombre, decreasing = TRUE)
+
+frecuenciaTipo = table(datos$Tipo_habitación)
+
+frecuenciaVecinador
+frecuenciaNombre
+frecuenciaTipo
 ```
