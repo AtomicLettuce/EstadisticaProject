@@ -32,7 +32,7 @@ names(datos)[names(datos) == "room_type"] <- "Tipo_habitación"
 names(datos)[names(datos) == "price"] <- "Precio"
 names(datos)[names(datos) == "minimum_nights"] <- "Min.noches"
 names(datos)[names(datos) == "number_of_reviews"] <- "N_reseñas"
-names(datos)[names(datos) == "number_of_reviews_ltm"] <- "Res.mes"
+names(datos)[names(datos) == "number_of_reviews_ltm"] <- "Reseñas_mes"
 names(datos)[names(datos) == "availability_365"] <- "Disponibilidad_año"
 
 names(datos)
@@ -41,22 +41,19 @@ names(datos)
 ## **3. Calcular mínimo, máximo, media, varianza, cuartiles y mediana.**
 
 ```{r 3}
-minimo = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=min))
-maximo = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=max))
 media = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=mean))
 varianza = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=var))
 cuartiles = sapply(datos[c(3,4,6,7,8,9)],FUN=quantile)
 
-rownames(cuartiles)<-(c("Cuartil_0","Cuartil_1","Mediana","Cuartil_3","Cuartil_4"))
+rownames(cuartiles)<-(c("mínimo","Cuartil_1","Mediana","Cuartil_3","màximo"))
 
-datosEstadisticos=0
+datosEstadisticos=media
 
-datosEstadisticos=minimo
-datosEstadisticos<-rbind(datosEstadisticos, maximo)
 datosEstadisticos<-rbind(datosEstadisticos, media)
 datosEstadisticos<-rbind(datosEstadisticos, varianza)
 datosEstadisticos<-rbind(datosEstadisticos,cuartiles)
 
+datosEstadisticos<-round(datosEstadisticos, digits=4)
 datosEstadisticos
 ```
 
