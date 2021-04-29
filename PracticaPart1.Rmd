@@ -35,7 +35,12 @@ names(datos)[names(datos) == "number_of_reviews"] <- "N_reseñas"
 names(datos)[names(datos) == "number_of_reviews_ltm"] <- "Reseñas_mes"
 names(datos)[names(datos) == "availability_365"] <- "Disponibilidad_año"
 
+datos<- subset(datos, datos$Precio<1000)
+datos<- subset(datos, datos$Min.noches<400)
+
+
 names(datos)
+
 ```
 
 ## **3. Calcular mínimo, máximo, media, varianza, cuartiles y mediana.**
@@ -44,15 +49,11 @@ names(datos)
 media = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=mean))
 varianza = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=var))
 cuartiles = sapply(datos[c(3,4,6,7,8,9)],FUN=quantile)
-
 rownames(cuartiles)<-(c("mínimo","Cuartil_1","Mediana","Cuartil_3","màximo"))
-
 datosEstadisticos=media
-
 datosEstadisticos<-rbind(datosEstadisticos, media)
 datosEstadisticos<-rbind(datosEstadisticos, varianza)
 datosEstadisticos<-rbind(datosEstadisticos,cuartiles)
-
 datosEstadisticos<-round(datosEstadisticos, digits=4)
 datosEstadisticos
 ```
@@ -62,15 +63,12 @@ datosEstadisticos
 ```{r 4}
 frecuenciaVecinador = table(datos$Vecindario)
 frecuenciaNombre = table(datos$Nombre_propietario)
-
 frecuenciaNombre <- subset(frecuenciaNombre,frecuenciaNombre > 20)
 frecuenciaNombre = sort(frecuenciaNombre, decreasing = TRUE)
-
 frecuenciaTipo = table(datos$Tipo_habitación)
 frecuenciaVecinador
 frecuenciaNombre
 frecuenciaTipo
-
 ```
 
 
@@ -80,18 +78,13 @@ frecuenciaTipo
 
 
 ```{r 5}
-
 boxplot(datos$Lat.)
 hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud")
 boxplot(datos$Long.)
 hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud")
-
 boxplot(datos$Precio)
-
 L1 = c(0,100,250,1000,2500,5000,10000)
 hist(datos$Precio, main= "Histograma de la variable Precio")
-
-
 boxplot(datos$Min.noches)
 hist(datos$Min.noches, main= "Histograma de la variable Minimo de noches", xlab = "Minimo de noches")
 boxplot(datos$N_reseñas)
@@ -100,5 +93,4 @@ boxplot(datos$Reseñas_mes)
 hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35))
 boxplot(datos$Disponibilidad_año)
 hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad por año", xlab = "Disponibilidad por año")
-
 ```
