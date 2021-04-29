@@ -38,7 +38,6 @@ names(datos)[names(datos) == "availability_365"] <- "Disponibilidad_año"
 datos<- subset(datos, datos$Precio<1000)
 datos<- subset(datos, datos$Min.noches<400)
 
-
 names(datos)
 
 ```
@@ -89,4 +88,29 @@ boxplot(datos$Reseñas_mes)
 hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35))
 boxplot(datos$Disponibilidad_año)
 hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad por año", xlab = "Disponibilidad por año")
+```
+
+
+## **Pie chart de variables no numéricas**
+```{r 6}
+
+frecuenciaVecindario = table(datos$Vecindario) #Hacemos una tabla de la frecuencias de la cantidad de habitaciones que hay para cada barrio
+habitacionesTotal=max(cumsum(frecuenciaVecindario)) #Número total de habitaciones en Malta
+
+frecuenciaVecindario <- frecuenciaVecindario[frecuenciaVecindario>0.01*habitacionesTotal] #Excluimos las ciudades que no representan ni un 1% del total
+
+numeroDeOtros= habitacionesTotal-max(cumsum(frecuenciaVecindario)) #Conseguir el número de "Otros" que hay en total
+
+names(numeroDeOtros)="Otros"
+frecuenciaVecindario=append(frecuenciaVecindario, numeroDeOtros) #Añadir Otros al final de la tabla
+
+pie(frecuenciaVecindario, main="Diagrama de tarta de la cantidad de habitaciones por cada barrio") #Graficarlo
+
+
+
+
+
+
+
+
 ```
