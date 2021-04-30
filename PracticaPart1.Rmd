@@ -161,3 +161,17 @@ plot(
 cor(x = datos$Precio, y = datos$Min.noches)
 cor(x = datos$N_reseñas, y = datos$Reseñas_mes)
 ```
+
+## **11. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
+```{r 11,results='hide'}
+Cut1 <- cut(x = datos$Precio, breaks = 5)
+Cut2 <- cut(x = datos$N_reseñas, breaks = 5)
+```
+
+## **12. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
+```{r 12}
+
+tabla_prop <- prop.table(Cut1)
+barplot(tabla_prop)
+
+```
