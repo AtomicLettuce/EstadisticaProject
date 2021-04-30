@@ -2,13 +2,13 @@
 title: "Practica Final Parte 1"
 author: "Xavier Vives, Josep Damià Ruiz, Antonio Marin y Martí Paredes"
 output:
-  html_document:
-    df_print: paged
+  pdf_document: default
   prettydoc::html_pretty:
     theme: cayman
     highlight: github
   word_document: default
-  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 \tableofcontents 
@@ -113,4 +113,51 @@ pie(frecuenciaVecindario, main="Diagrama de tarta de la cantidad de habitaciones
 
 
 
+```
+
+## **9. Diagramas de dispersión de 4 variables numéricas 2 a 2, con un color para cada Vecindario.**
+```{r 9}
+
+
+
+VecindarioNum <-as.factor(datos$Vecindario) # Pasamos el vector vecindario a un vector de factores
+
+
+
+datos$Min.noches <- ifelse(datos$Min.noches > 200, 200, datos$Min.noches) #creamos el primer plot
+plot(
+  x = datos$Precio,
+  y = datos$Min.noches,
+  xlab = "Precio",
+  ylab = "Minimo noches",
+  pch = 20, # solid dots increase the readability of this data plot
+  col = VecindarioNum, # El color se asigna dependiendo del vecindario
+  main = "Precio /Min noches"
+)
+plot(
+  x = datos$N_reseñas,
+  y = datos$Reseñas_mes,
+  xlab = "Numero Reseñas",
+  ylab = "Reseñas/mes",
+  pch = 20, # solid dots increase the readability of this data plot
+  col = VecindarioNum, # El color se asigna dependiendo del vecindario
+  main = "N_Reseñas /Reseñas_Mes"
+)
+
+
+
+
+
+
+
+
+
+
+```
+
+
+## **10. Coeficientes de correlación 2 a 2 apartado anterior.**
+```{r 10}
+cor(x = datos$Precio, y = datos$Min.noches)
+cor(x = datos$N_reseñas, y = datos$Reseñas_mes)
 ```
