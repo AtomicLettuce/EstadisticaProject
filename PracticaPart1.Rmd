@@ -2,13 +2,13 @@
 title: "Practica Final Parte 1"
 author: "Xavier Vives, Josep Damià Ruiz, Antonio Marin y Martí Paredes"
 output:
-  pdf_document: default
+  html_document:
+    df_print: paged
   prettydoc::html_pretty:
     theme: cayman
     highlight: github
   word_document: default
-  html_document:
-    df_print: paged
+  pdf_document: default
 ---
 
 \tableofcontents 
@@ -24,6 +24,7 @@ datos = datos_raw[-c(1,2,3,5,14,15)]
 ## **2. Renombrar las variables al castellano.**
 
 ```{r 2}
+#Renombramos todas las variables
 names(datos)[names(datos) == "host_name"] <- "Nombre_propietario"
 names(datos)[names(datos) == "neighbourhood"] <- "Vecindario"
 names(datos)[names(datos) == "latitude"] <- "Lat."
@@ -35,20 +36,23 @@ names(datos)[names(datos) == "number_of_reviews"] <- "N_reseñas"
 names(datos)[names(datos) == "number_of_reviews_ltm"] <- "Reseñas_mes"
 names(datos)[names(datos) == "availability_365"] <- "Disponibilidad_año"
 
-datos<- subset(datos, datos$Precio<1000)
-datos<- subset(datos, datos$Min.noches<400)
-
 names(datos)
-
 ```
 
 ## **3. Calcular mínimo, máximo, media, varianza, cuartiles y mediana.**
 
 ```{r 3}
+#Quitamos las filas con valores en variables absurdamente grandes para que se vean los gráficos bien a la hora de calcularlos
+datos<- subset(datos, datos$Precio<1000)
+datos<- subset(datos, datos$Min.noches<100)
+
+#Cálculo de datos estadísticos
 media = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=mean))
 varianza = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=var))
 cuartiles = sapply(datos[c(3,4,6,7,8,9)],FUN=quantile)
 rownames(cuartiles)<-(c("mínimo","Cuartil_1","Mediana","Cuartil_3","màximo"))
+
+#Metemos todos los datos estadísticos en una sola tabla
 datosEstadisticos=media
 datosEstadisticos<-rbind(datosEstadisticos, media)
 datosEstadisticos<-rbind(datosEstadisticos, varianza)
@@ -91,39 +95,20 @@ hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad 
 ```
 
 
-## **Pie chart de variables no numéricas**
+## **6. Pie chart de variables no numéricas**
 ```{r 6}
-
 frecuenciaVecindario = table(datos$Vecindario) #Hacemos una tabla de la frecuencias de la cantidad de habitaciones que hay para cada barrio
 habitacionesTotal=max(cumsum(frecuenciaVecindario)) #Número total de habitaciones en Malta
-
-frecuenciaVecindario <- frecuenciaVecindario[frecuenciaVecindario>0.01*habitacionesTotal] #Excluimos las ciudades que no representan ni un 1% del total
-
+frecuenciaVecindario <- frecuenciaVecindario[frecuenciaVecindario>0.02*habitacionesTotal] #Excluimos las ciudades que no representan ni un 1% del total
 numeroDeOtros= habitacionesTotal-max(cumsum(frecuenciaVecindario)) #Conseguir el número de "Otros" que hay en total
-
 names(numeroDeOtros)="Otros"
 frecuenciaVecindario=append(frecuenciaVecindario, numeroDeOtros) #Añadir Otros al final de la tabla
-
 pie(frecuenciaVecindario, main="Diagrama de tarta de la cantidad de habitaciones por cada barrio") #Graficarlo
-
-
-
-
-
-
-
-
 ```
 
 ## **9. Diagramas de dispersión de 4 variables numéricas 2 a 2, con un color para cada Vecindario.**
 ```{r 9}
-
-
-
 VecindarioNum <-as.factor(datos$Vecindario) # Pasamos el vector vecindario a un vector de factores
-
-
-
 datos$Min.noches <- ifelse(datos$Min.noches > 200, 200, datos$Min.noches) #creamos el primer plot
 plot(
   x = datos$Precio,
@@ -143,16 +128,6 @@ plot(
   col = VecindarioNum, # El color se asigna dependiendo del vecindario
   main = "N_Reseñas /Reseñas_Mes"
 )
-
-
-
-
-
-
-
-
-
-
 ```
 
 
@@ -163,15 +138,13 @@ cor(x = datos$N_reseñas, y = datos$Reseñas_mes)
 ```
 
 ## **11. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
-```{r 11,results='hide'}
+```{r 11}
 Cut1 <- cut(x = datos$Precio, breaks = 5)
 Cut2 <- cut(x = datos$N_reseñas, breaks = 5)
+
 ```
 
 ## **12. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
 ```{r 12}
-
-tabla_prop <- prop.table(Cut1)
-barplot(tabla_prop)
 
 ```
