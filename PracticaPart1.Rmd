@@ -76,22 +76,45 @@ frecuenciaTipo
 
 ## **5. Boxplots y histogramas.**
 
-```{r 5}
-boxplot(datos$Lat.)
-hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud")
-boxplot(datos$Long.)
-hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud")
-boxplot(datos$Precio)
-L1 = c(0,100,250,1000,2500,5000,10000)
-hist(datos$Precio, main= "Histograma de la variable Precio")
-boxplot(datos$Min.noches)
-hist(datos$Min.noches, main= "Histograma de la variable Minimo de noches", xlab = "Minimo de noches")
-boxplot(datos$N_reseñas)
-hist(datos$N_reseñas, main= "Histograma de la variable Numero de reseñas", xlab = "Numero de reseñas")
-boxplot(datos$Reseñas_mes)
-hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35))
-boxplot(datos$Disponibilidad_año)
-hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad por año", xlab = "Disponibilidad por año")
+
+```{r fig.width=5}
+
+
+boxplot(datos$Lat., main = "Boxplot de la variable Latitud")
+
+hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud", ylab= "Frequencia")
+```
+
+```{r fig.width=5}
+boxplot(datos$Long., main = "Boxplot de la variable Longitud")
+hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud", xlim =c(14.15,14.6), ylab= "Frequencia")
+```
+
+
+```{r fig.width=5}
+boxplot(datos$Precio, main = "Boxplot de la variable Precio")
+hist(datos$Precio, main= "Histograma de la variable Precio", xlim = c(7,600), ylab= "Frequencia")
+```
+
+
+```{r }
+boxplot(datos$Min.noches, ylim = c(1,100), main = "Boxplot de la variable Mínimo de Noches")
+hist(datos$Min.noches, main= "Histograma de la variable Minimo de noches", xlab = "Minimo de noches",xlim = c(1,100),  breaks = "Scott", ylab= "Frequencia")
+```
+
+```{r fig.width=5}
+boxplot(datos$N_reseñas, main = "Boxplot de la variable Numeros de reseñas")
+hist(datos$N_reseñas, main= "Histograma de la variable Numero de reseñas", xlab = "Numero de reseñas", xlim = c(0,250), ylab= "Frequencia")
+```
+
+```{r fig.width=7}
+boxplot(datos$Reseñas_mes, main = "Boxplot de la variable Numeros de Reseñas por mes" )
+hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35), ylab= "Frequencia")
+```
+
+```{r fig.width=6}
+boxplot(datos$Disponibilidad_año , main = "Boxplot de la variable Disponibilidad por año")
+hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad por año", xlab = "Disponibilidad por año", ylab= "Frequencia")
 ```
 
 
