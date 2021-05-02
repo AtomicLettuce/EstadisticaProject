@@ -2,19 +2,22 @@
 title: "Practica Final Parte 1"
 author: "Xavier Vives, Josep Damià Ruiz, Antonio Marin y Martí Paredes"
 output:
-  html_document:
-    df_print: paged
   prettydoc::html_pretty:
+    toc: true
+    toc_depth: 2
     theme: cayman
     highlight: github
-  word_document: default
+  html_document:
+    df_print: paged
+    toc: true
+    toc_depth: 2
   pdf_document: default
 ---
-
+\renewcommand{\contentsname}{Contenidos:}
 \tableofcontents 
 \newpage
 
-## **1. Cargad en un dataframe los datos del fichero listings.csv y construid un nuevo data frame**
+## **1. Cargad en un dataframe los datos del fichero listings.csv y construid un nuevo data frame.**
 
 ```{r 1}
 datos_raw = read.csv("listings.csv")
@@ -23,7 +26,7 @@ datos = datos_raw[-c(1,2,3,5,14,15)]
 
 ## **2. Renombrar las variables al castellano.**
 
-```{r 2}
+```{r 2, comment=NA}
 #Renombramos todas las variables
 names(datos)[names(datos) == "host_name"] <- "Nombre_propietario"
 names(datos)[names(datos) == "neighbourhood"] <- "Vecindario"
@@ -35,23 +38,20 @@ names(datos)[names(datos) == "minimum_nights"] <- "Min.noches"
 names(datos)[names(datos) == "number_of_reviews"] <- "N_reseñas"
 names(datos)[names(datos) == "number_of_reviews_ltm"] <- "Reseñas_mes"
 names(datos)[names(datos) == "availability_365"] <- "Disponibilidad_año"
-
 names(datos)
 ```
 
 ## **3. Calcular mínimo, máximo, media, varianza, cuartiles y mediana.**
 
-```{r 3}
+```{r 3, echo = FALSE, comment=NA}
 #Quitamos las filas con valores en variables absurdamente grandes para que se vean los gráficos bien a la hora de calcularlos
 datos<- subset(datos, datos$Precio<1000)
 datos<- subset(datos, datos$Min.noches<100)
-
 #Cálculo de datos estadísticos
 media = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=mean))
 varianza = unname(sapply(datos[c(3,4,6,7,8,9)],FUN=var))
 cuartiles = sapply(datos[c(3,4,6,7,8,9)],FUN=quantile)
 rownames(cuartiles)<-(c("mínimo","Cuartil_1","Mediana","Cuartil_3","màximo"))
-
 #Metemos todos los datos estadísticos en una sola tabla
 datosEstadisticos=media
 datosEstadisticos<-rbind(datosEstadisticos, media)
@@ -63,7 +63,7 @@ datosEstadisticos
 
 ## **4. Tablas de frecuencias absolutas.**
 
-```{r 4}
+```{r 4, comment=NA}
 frecuenciaVecinador = table(datos$Vecindario)
 frecuenciaNombre = table(datos$Nombre_propietario)
 frecuenciaNombre <- subset(frecuenciaNombre,frecuenciaNombre > 20)
@@ -74,56 +74,45 @@ frecuenciaNombre
 frecuenciaTipo
 ```
 
-## **5. Boxplots y histogramas.**
+## **5. Boxplots y histogramas de las variables numericas.**
 
-Boxplots de las variables numericas
+Boxplots de las variables numericas. 
+
+
 ```{r fig.width=10, fig.height= 10, echo= FALSE}
-
 par(mfrow=c(2,2))
 
 boxplot(datos$Lat., main = "Boxplot de la variable Latitud", col = "blue")
-
 boxplot(datos$Long., main = "Boxplot de la variable Longitud", col = "pink")
-
 boxplot(datos$Precio, main = "Boxplot de la variable Precio", col = "red")
-
 boxplot(datos$Min.noches, ylim = c(1,100), main = "Boxplot de la variable Mínimo de Noches", col = "green")
-
 boxplot(datos$N_reseñas, main = "Boxplot de la variable Numeros de reseñas", col = "orange")
-
 boxplot(datos$Reseñas_mes, main = "Boxplot de la variable Numeros de Reseñas por mes" , col = "yellow")
-
 boxplot(datos$Disponibilidad_año , main = "Boxplot de la variable Disponibilidad por año", col = "purple")
 
- par(mfrow=c(1,1))
+par(mfrow=c(1,1))
 ```
 
 
-Histogramas de las variables numericas
+Histogramas de las variables numericas.
+
+
 ```{r fig.width=10, fig.height=10, echo= FALSE}
-
 par(mfrow=c(2,2))
+
 hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud", ylab= "Frequencia", col = "blue")
-
 hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud", xlim =c(14.15,14.6), ylab= "Frequencia", col = "pink")
-
 hist(datos$Precio, main= "Histograma de la variable Precio", xlim = c(7,600), ylab= "Frequencia", col = "red")
-
 hist(datos$Min.noches, main= "Histograma de la variable Minimo de noches", xlab = "Minimo de noches",xlim = c(1,100),  breaks = "Scott", ylab= "Frequencia", col = "green")
-
 hist(datos$N_reseñas, main= "Histograma de la variable Numero de reseñas", xlab = "Numero de reseñas", xlim = c(0,250), ylab= "Frequencia", col = "orange")
-
 hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35), ylab= "Frequencia", col = "yellow")
-
 hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad por año", xlab = "Disponibilidad por año", ylab= "Frequencia", col = "purple")
 
- par(mfrow=c(1,1))
+par(mfrow=c(1,1))
 ```
 
-
-
-## **6. Pie chart de variables no numéricas**
-```{r 6}
+## **6. Pie chart de variables no numéricas.**
+```{r 6, echo = FALSE, comment=NA}
 frecuenciaVecindario = table(datos$Vecindario) #Hacemos una tabla de la frecuencias de la cantidad de habitaciones que hay para cada barrio
 habitacionesTotal=max(cumsum(frecuenciaVecindario)) #Número total de habitaciones en Malta
 frecuenciaVecindario <- frecuenciaVecindario[frecuenciaVecindario>0.02*habitacionesTotal] #Excluimos las ciudades que no representan ni un 1% del total
@@ -132,112 +121,62 @@ names(numeroDeOtros)="Otros"
 frecuenciaVecindario=append(frecuenciaVecindario, numeroDeOtros) #Añadir Otros al final de la tabla
 pie(frecuenciaVecindario, main="Diagrama de tarta de la cantidad de habitaciones por cada barrio") #Graficarlo
 ```
-## **7. Valor medio de alguna de las variables numéricas según el barrio**
 
-
-
+## **7. Valor medio de alguna de las variables numéricas según el barrio.**
 
 ```{r, comment= NA, echo= FALSE}
-
-
 BarriosValidos = datos[datos$Vecindario!= "" && datos$Vecindario!= "N/A"] ##Primero comprobamos todos los barrios validos
-
 mediaPrecio = tapply(BarriosValidos$Precio, BarriosValidos$Vecindario, mean) ##Creamos el vector aplicando la media a la variable que queremos tratar
-
 sort(mediaPrecio,decreasing = FALSE)##Se ordena de menor a mayor
-
-
-
 ```
 
-Valor medio de la variable Número de reseñas en base a los distintos barrios
+Valor medio de la variable Número de reseñas en base a los distintos barrios.
 ```{r, comment= NA, echo= FALSE}
-
-
 BarriosValidos = datos[datos$Vecindario!= "" && datos$Vecindario!= "N/A"] ##Primero comprobamos todos los barrios validos
-
 mediaPrecio = tapply(BarriosValidos$N_reseñas, BarriosValidos$Vecindario, mean) ##Creamos el vector aplicando la media a la variable que queremos tratar
-
 sort(mediaPrecio,decreasing = FALSE)##Se ordena de menor a mayor
-
-
-
 ```
 
-Valor medio de la variable Disponibilidad por año en base a los distintos barrios
+Valor medio de la variable Disponibilidad por año en base a los distintos barrios.
 ```{r, comment= NA, echo= FALSE}
-
-
 BarriosValidos = datos[datos$Vecindario!= "" && datos$Vecindario!= "N/A"] ##Primero comprobamos todos los barrios validos
-
 mediaPrecio = tapply(BarriosValidos$Disponibilidad_año, BarriosValidos$Vecindario, mean) ##Creamos el vector aplicando la media a la variable que queremos tratar
-
 sort(mediaPrecio,decreasing = FALSE)##Se ordena de menor a mayor
-
-
-
-
 ```
 
-Valor medio de la variable Mínimo de noches en base a los distintos barrios
+Valor medio de la variable Mínimo de noches en base a los distintos barrios.
 ```{r, comment= NA, echo= FALSE}
-
-
 BarriosValidos = datos[datos$Vecindario!= "" && datos$Vecindario!= "N/A"] ##Primero comprobamos todos los barrios validos
-
 mediaPrecio = tapply(BarriosValidos$Min.noches, BarriosValidos$Vecindario, mean) ##Creamos el vector aplicando la media a la variable que queremos tratar
-
 sort(mediaPrecio,decreasing = FALSE)##Se ordena de menor a mayor
-
-
-
-
 ```
 
-## **8. Boxplot de la variable precio, para los 5 barrios más caros (precio medio más alto) y los 5 barrios más baratos **
+## **8. Boxplot de la variable precio, para los 5 barrios más caros y los 5 barrios más baratos.**
 
 ```{r, echo= FALSE}
-
 BarriosValidos = datos[datos$Vecindario!= "" && datos$Vecindario!= "N/A"] ##Primero comprobamos todos los barrios validos
-
-
 #Creamos un dataframe para almacenar los datos corrspondientes de los cinco barrios mas caros (sabemos cuales son gracias al ejercicio 7)
 mascaros = BarriosValidos[BarriosValidos$Vecindario == "Fgura" | BarriosValidos$Vecindario == "Ghasri" | BarriosValidos$Vecindario == "Sannat" | BarriosValidos$Vecindario == "Dingli"| BarriosValidos$Vecindario == "San Lawrenz", ]
-
 #creamos el boxplot
 boxplot(mascaros$Precio~mascaros$Vecindario, ylab = "Precio", xlab = "Barrios", main = "Boxplot de los cinco barrios mas caros", col = "RED")
-
 #añadimos la media al boxplot
-
 medias = aggregate(BarriosValidos$Precio~BarriosValidos$Vecindario , data = BarriosValidos, FUN = mean)
-
-points(medias, col = "blue", pch = 16)
-
-
-
-        
+points(medias, col = "blue", pch = 16)        
 ```
 
 ```{r, echo= FALSE}
-
 BarriosValidos = datos[datos$Vecindario!= "" && datos$Vecindario!= "N/A"] ##Primero comprobamos todos los barrios validos
-
-
 #Creamos un dataframe para almacenar los datos corrspondientes de los cinco barrios mas baratos (sabemos cuales son gracias al ejercicio 7)
 masbaratos = BarriosValidos[BarriosValidos$Vecindario == "Santa Lucija" | BarriosValidos$Vecindario == "Mtarfa" | BarriosValidos$Vecindario == "Qormi" | BarriosValidos$Vecindario == "San Gwann"| BarriosValidos$Vecindario == "Safi", ]
-
 #creamos el boxplot
 boxplot(masbaratos$Precio~masbaratos$Vecindario, ylab = "Precio", xlab = "Barrios", main = "Boxplot de los cinco barrios mas baratos", col = "yellow") 
 #añadimos la media al boxplot
 medias = aggregate(BarriosValidos$Precio~BarriosValidos$Vecindario , data = BarriosValidos, FUN = mean)
 points(medias, col = "green", pch = 16)
-
-
-
-        
 ```
+
 ## **9. Diagramas de dispersión de 4 variables numéricas 2 a 2, con un color para cada Vecindario.**
-```{r 9}
+```{r 9, echo = FALSE, comment=NA}
 VecindarioNum <-as.factor(datos$Vecindario) # Pasamos el vector vecindario a un vector de factores
 datos$Min.noches <- ifelse(datos$Min.noches > 200, 200, datos$Min.noches) #creamos el primer plot
 plot(
@@ -260,21 +199,24 @@ plot(
 )
 ```
 
-
 ## **10. Coeficientes de correlación 2 a 2 apartado anterior.**
-```{r 10}
+```{r 10, echo = FALSE, comment=NA}
 cor(x = datos$Precio, y = datos$Min.noches)
 cor(x = datos$N_reseñas, y = datos$Reseñas_mes)
-```
+```     
 
 ## **11. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
 ```{r 11}
 Cut1 <- cut(x = datos$Precio, breaks = 5)
 Cut2 <- cut(x = datos$N_reseñas, breaks = 5)
-
 ```
 
-## **12. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
-```{r 12}
+## **12. A partir de los datos en intervalos obtenidos en el apartado anterior construid una tabla de contingencia de las dos variables y dibuja el diagrama de mosaico asociado a la mesa.**
 
+```{r 12, echo = FALSE, comment=NA}
+cuts <- table(Cut1,Cut2)
+cuts
+par(mar=c(2,1,1,2))
+colores <- c("lightblue","lightgreen","purple")
+mosaicplot(cuts, main= "mosaico", col = colores)
 ```
