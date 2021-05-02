@@ -7,11 +7,11 @@ output:
     toc_depth: 2
     theme: cayman
     highlight: github
+  pdf_document: default
   html_document:
     df_print: paged
     toc: true
     toc_depth: 2
-  pdf_document: default
 ---
 \renewcommand{\contentsname}{Contenidos:}
 \tableofcontents 
@@ -64,11 +64,15 @@ datosEstadisticos
 ## **4. Tablas de frecuencias absolutas.**
 
 ```{r 4, comment=NA}
+#generamos una tabla para cada variable no numérica
 frecuenciaVecinador = table(datos$Vecindario)
 frecuenciaNombre = table(datos$Nombre_propietario)
+#Para la tabla de nombre quitamos todos aquellos que no superan las 20 apariciones para no sobrecargar la tabla con muchos nombres
 frecuenciaNombre <- subset(frecuenciaNombre,frecuenciaNombre > 20)
 frecuenciaNombre = sort(frecuenciaNombre, decreasing = TRUE)
 frecuenciaTipo = table(datos$Tipo_habitación)
+
+#mostramos por pantalla las tablas
 frecuenciaVecinador
 frecuenciaNombre
 frecuenciaTipo
@@ -80,8 +84,9 @@ Boxplots de las variables numericas.
 
 
 ```{r fig.width=10, fig.height= 10, echo= FALSE}
+#Ponemos para que los gráficos se puedan mostrar a dos por línea y ocupen menos espacio
 par(mfrow=c(2,2))
-
+#Generamos todos los gráficos
 boxplot(datos$Lat., main = "Boxplot de la variable Latitud", col = "blue")
 boxplot(datos$Long., main = "Boxplot de la variable Longitud", col = "pink")
 boxplot(datos$Precio, main = "Boxplot de la variable Precio", col = "red")
@@ -89,7 +94,7 @@ boxplot(datos$Min.noches, ylim = c(1,100), main = "Boxplot de la variable Mínim
 boxplot(datos$N_reseñas, main = "Boxplot de la variable Numeros de reseñas", col = "orange")
 boxplot(datos$Reseñas_mes, main = "Boxplot de la variable Numeros de Reseñas por mes" , col = "yellow")
 boxplot(datos$Disponibilidad_año , main = "Boxplot de la variable Disponibilidad por año", col = "purple")
-
+#Resetamos el "par" para evitar tener problemas
 par(mfrow=c(1,1))
 ```
 
@@ -98,8 +103,8 @@ Histogramas de las variables numericas.
 
 
 ```{r fig.width=10, fig.height=10, echo= FALSE}
+#Ponemos para que los gráficos se puedan mostrar a dos por línea y ocupen menos espacio
 par(mfrow=c(2,2))
-
 hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud", ylab= "Frequencia", col = "blue")
 hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud", xlim =c(14.15,14.6), ylab= "Frequencia", col = "pink")
 hist(datos$Precio, main= "Histograma de la variable Precio", xlim = c(7,600), ylab= "Frequencia", col = "red")
@@ -107,7 +112,7 @@ hist(datos$Min.noches, main= "Histograma de la variable Minimo de noches", xlab 
 hist(datos$N_reseñas, main= "Histograma de la variable Numero de reseñas", xlab = "Numero de reseñas", xlim = c(0,250), ylab= "Frequencia", col = "orange")
 hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35), ylab= "Frequencia", col = "yellow")
 hist(datos$Disponibilidad_año, main= "Histograma de la variable disponibilidad por año", xlab = "Disponibilidad por año", ylab= "Frequencia", col = "purple")
-
+#Resetamos el "par" para evitar tener problemas
 par(mfrow=c(1,1))
 ```
 
@@ -115,7 +120,7 @@ par(mfrow=c(1,1))
 ```{r 6, echo = FALSE, comment=NA}
 frecuenciaVecindario = table(datos$Vecindario) #Hacemos una tabla de la frecuencias de la cantidad de habitaciones que hay para cada barrio
 habitacionesTotal=max(cumsum(frecuenciaVecindario)) #Número total de habitaciones en Malta
-frecuenciaVecindario <- frecuenciaVecindario[frecuenciaVecindario>0.02*habitacionesTotal] #Excluimos las ciudades que no representan ni un 1% del total
+frecuenciaVecindario <- frecuenciaVecindario[frecuenciaVecindario>0.02*habitacionesTotal] #Excluimos las ciudades que no representan ni un 2% del total para no sobrecargar el gráfico pues si no lo hacemos no lo podremos leer
 numeroDeOtros= habitacionesTotal-max(cumsum(frecuenciaVecindario)) #Conseguir el número de "Otros" que hay en total
 names(numeroDeOtros)="Otros"
 frecuenciaVecindario=append(frecuenciaVecindario, numeroDeOtros) #Añadir Otros al final de la tabla
@@ -201,6 +206,7 @@ plot(
 
 ## **10. Coeficientes de correlación 2 a 2 apartado anterior.**
 ```{r 10, echo = FALSE, comment=NA}
+#Ponemos el echo a FALSE porque sino generaremos muchas páginas de texto
 cor(x = datos$Precio, y = datos$Min.noches)
 cor(x = datos$N_reseñas, y = datos$Reseñas_mes)
 ```     
@@ -214,6 +220,7 @@ Cut2 <- cut(x = datos$N_reseñas, breaks = 5)
 ## **12. A partir de los datos en intervalos obtenidos en el apartado anterior construid una tabla de contingencia de las dos variables y dibuja el diagrama de mosaico asociado a la mesa.**
 
 ```{r 12, echo = FALSE, comment=NA}
+#Ponemos el echo a FALSE porque sino generaremos muchas páginas de texto al generar cuts
 cuts <- table(Cut1,Cut2)
 cuts
 par(mar=c(2,1,1,2))
