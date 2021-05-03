@@ -107,7 +107,7 @@ Histogramas de las variables numericas.
 par(mfrow=c(2,2))
 hist(datos$Lat., main= "Histograma de la variable Latitud", xlab = "Latitud", ylab= "Frequencia", col = "blue")
 hist(datos$Long., main= "Histograma de la variable Longitud", xlab = "Longitud", xlim =c(14.15,14.6), ylab= "Frequencia", col = "pink")
-hist(datos$Precio, main= "Histograma de la variable Precio", xlim = c(7,600), ylab= "Frequencia", col = "red")
+hist(datos$Precio, main= "Histograma de la variable Precio", xlim = c(7,600),xlab = "Precio", ylab= "Frequencia", col = "red")
 hist(datos$Min.noches, main= "Histograma de la variable Minimo de noches", xlab = "Minimo de noches",xlim = c(1,100),  breaks = "Scott", ylab= "Frequencia", col = "green")
 hist(datos$N_reseñas, main= "Histograma de la variable Numero de reseñas", xlab = "Numero de reseñas", xlim = c(0,250), ylab= "Frequencia", col = "orange")
 hist(datos$Reseñas_mes, main= "Histograma de la variable Numero de reseñas por mes", xlab = "Numero de reseñas por mes", xlim = c(0,35), ylab= "Frequencia", col = "yellow")
