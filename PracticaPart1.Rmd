@@ -86,16 +86,23 @@ Boxplots de las variables numericas.
 ```{r fig.width=10, fig.height= 10, echo= FALSE}
 #Ponemos para que los gráficos se puedan mostrar a dos por línea y ocupen menos espacio
 par(mfrow=c(2,2))
-#Generamos todos los gráficos
-boxplot(datos$Lat., main = "Boxplot de la variable Latitud", col = "blue")
-boxplot(datos$Long., main = "Boxplot de la variable Longitud", col = "pink")
-boxplot(datos$Precio, main = "Boxplot de la variable Precio", col = "red")
-boxplot(datos$Min.noches, ylim = c(1,100), main = "Boxplot de la variable Mínimo de Noches", col = "green")
-boxplot(datos$N_reseñas, main = "Boxplot de la variable Numeros de reseñas", col = "orange")
-boxplot(datos$Reseñas_mes, main = "Boxplot de la variable Numeros de Reseñas por mes" , col = "yellow")
-boxplot(datos$Disponibilidad_año , main = "Boxplot de la variable Disponibilidad por año", col = "purple")
-#Resetamos el "par" para evitar tener problemas
-par(mfrow=c(1,1))
+
+
+boxplot(datos$Lat., main = "Boxplot de la variable Latitud", col = "blue", ylab = "Latitud")
+
+boxplot(datos$Long., main = "Boxplot de la variable Longitud", col = "pink", ylab = "Longitud")
+
+boxplot(datos$Precio, main = "Boxplot de la variable Precio", col = "red", ylab = "Precio")
+
+boxplot(datos$Min.noches, ylim = c(1,100), main = "Boxplot de la variable Mínimo de Noches", col = "green", ylab = "Mínimo de noches")
+
+boxplot(datos$N_reseñas, main = "Boxplot de la variable Numeros de reseñas", col = "orange", ylab = "Numero de reseñas")
+
+boxplot(datos$Reseñas_mes, main = "Boxplot de la variable Numeros de Reseñas por mes" , col = "yellow", ylab = "Numero de reseñas por mes")
+
+boxplot(datos$Disponibilidad_año , main = "Boxplot de la variable Disponibilidad por año", col = "purple", ylab = "Disponibilidad por año")
+
+ par(mfrow=c(1,1))
 ```
 
 
