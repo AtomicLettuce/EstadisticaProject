@@ -219,9 +219,12 @@ cor(x = datos$N_reseñas, y = datos$Reseñas_mes)
 ```     
 
 ## **11. Con 2 variables numéricas, organizar sus valores en un máximo de 5 intervalos con ala función cut.**
-```{r 11}
+```{r 11, echo = FALSE, comment = NA}
 Cut1 <- cut(x = datos$Precio, breaks = 5)
 Cut2 <- cut(x = datos$N_reseñas, breaks = 5)
+
+table(Cut1)
+table(Cut2)
 ```
 
 ## **12. A partir de los datos en intervalos obtenidos en el apartado anterior construid una tabla de contingencia de las dos variables y dibuja el diagrama de mosaico asociado a la mesa.**
