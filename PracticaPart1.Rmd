@@ -232,5 +232,5 @@ cuts <- table(Cut1,Cut2)
 cuts
 par(mar=c(2,1,1,2))
 colores <- c("lightblue","lightgreen","purple")
-mosaicplot(cuts, main= "mosaico", col = colores)
+mosaicplot(cuts, main= "Tabla contingencia Precios y Reseñas", col = colores)
 ```
